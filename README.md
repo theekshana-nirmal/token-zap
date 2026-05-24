@@ -1,4 +1,7 @@
 # TokenZap
+<div>
+  <img src="assets/logo.webp" alt="TokenZap Logo" width="800">
+</div>
 
 TokenZap is a lightweight utility designed to optimize text payloads before they are sent to Large Language Models (LLMs). By systematically identifying and removing redundant spacing, unnecessary characters, and structural filler, the tool helps developers reduce API token consumption and lower operational costs.
 
