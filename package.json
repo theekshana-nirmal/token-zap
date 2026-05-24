@@ -9,12 +9,20 @@
   "type": "module",
   "repository": {
     "type": "github",
-    "url": "git+https://github.com/theekshana-nirmal/token-zap.git#commit-ish"
+    "url": "git+https://github.com/theekshana-nirmal/token-zap.git#main"
+  },
+  "homepage": "https://github.com/theekshana-nirmal/token-zap#readme",
+  "bugs": {
+    "url": "https://github.com/theekshana-nirmal/token-zap/issues"
+  },
+  "exports": {
+    ".": "./index.js"
   },
   "files": [
     "index.js",
     "README.md",
-    "utils/"
+    "utils/",
+    "LICENSE"
   ],
   "keywords": [
     "llm",
