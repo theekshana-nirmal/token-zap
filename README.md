@@ -12,7 +12,7 @@ Because LLM tokenizers process text differently than humans, hidden characters l
 You can install TokenZap directly from the npm registry using the following command:
 
 ```bash
-npm install @thee-nix/token-zap
+npm install @theenix/token-zap
 ```
 
 ## Usage
@@ -21,7 +21,7 @@ npm install @thee-nix/token-zap
 TokenZap exports a single function called `tokenZap` that accepts a text string and an options object. Here is a simple example:
 
 ```js
-import { tokenZap } from "@thee-nix/token-zap";
+import { tokenZap } from "@theenix/token-zap";
 
 const text = "This is  a   sample    text with extra spaces.";
 const cleaned = tokenZap(text);
@@ -43,7 +43,7 @@ The `tokenZap` function accepts the following options:
 #### Remove Extra Spaces Only
 
 ```js
-import { tokenZap } from "@thee-nix/token-zap";
+import { tokenZap } from "@theenix/token-zap";
 
 const text = "This is  a   line with   extra spaces.";
 const result = tokenZap(text);
@@ -55,7 +55,7 @@ console.log(result);
 #### Remove Articles and Extra Spaces
 
 ```js
-import { tokenZap } from "@thee-nix/token-zap";
+import { tokenZap } from "@theenix/token-zap";
 
 const text = "The quick brown fox jumps over the lazy dog.";
 const result = tokenZap(text, { removeArticles: true });
@@ -67,7 +67,7 @@ console.log(result);
 #### Disable Trimming Extra Spaces
 
 ```js
-import { tokenZap } from "@thee-nix/token-zap";
+import { tokenZap } from "@theenix/token-zap";
 
 const text = "This is  a   sample.";
 const result = tokenZap(text, { trimExtraSpaces: false, removeArticles: true });
