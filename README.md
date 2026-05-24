@@ -10,7 +10,6 @@ You can install TokenZap directly from the npm registry using the following comm
 
 ```bash
 npm install @thee-nix/token-zap
-
 ```
 
 ## Usage
