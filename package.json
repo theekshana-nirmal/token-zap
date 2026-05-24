@@ -7,6 +7,14 @@
     "test": "npm --test"
   },
   "type": "module",
+  "repository": {
+    "type": "github",
+    "url": "git+https://github.com/theekshana-nirmal/token-zap.git#commit-ish"
+  },
+  "files": [
+    "index.js",
+    "README.md"
+  ],
   "keywords": [
     "llm",
     "prompt-engineering",
