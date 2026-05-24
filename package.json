@@ -4,7 +4,7 @@
   "description": "Shrink your LLM prompts instantly. TokenZap removes wasteful spacing and unnecessary characters to keep your API payloads lean and token-efficient.",
   "main": "index.js",
   "scripts": {
-    "test": "npm --test"
+    "test": "node test/test.js"
   },
   "type": "module",
   "repository": {
@@ -13,7 +13,8 @@
   },
   "files": [
     "index.js",
-    "README.md"
+    "README.md",
+    "utils/"
   ],
   "keywords": [
     "llm",
