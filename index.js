@@ -1,18 +1,20 @@
 import { removeArticles as rmArticles } from "./utils/removeArticles.js";
 import { trimExtraSpaces as trimSpaces } from "./utils/trimExtraSpaces.js";
 
-export function tokenZap(prompt, options = {}) {
-  const { removeArticles = false, trimExtraSpaces = true } = options;
+export function tokenZap(text, options = {}) {
+  const {
+    removeArticles = false,
+    trimExtraSpaces = true,
+    preserveCodeBlocks = true,
+  } = options;
 
-  // Remove articles if the option is enabled
   if (removeArticles) {
-    prompt = rmArticles(prompt);
+    text = rmArticles(text);
   }
 
-  // Trim extra spaces by default
   if (trimExtraSpaces) {
-    prompt = trimSpaces(prompt);
+    text = trimSpaces(text, preserveCodeBlocks);
   }
 
-  return prompt;
+  return text;
 }
