@@ -12,7 +12,6 @@ Because LLM tokenizers process text differently than humans, hidden characters l
 
 ```bash
 npm install @theenix/token-zap
-
 ```
 
 ## Usage
