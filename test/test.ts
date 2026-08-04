@@ -87,27 +87,77 @@ assert(
   "hello ```code block``` world"
 );
 
-console.log("\nremoveArticles + preserveCodeBlocks interaction");
+console.log("\nremoveArticles — zone-aware behavior");
 
-const mixedInput = `The   function below is the   best:
+assert(
+  "removes articles from plain prose",
+  tokenZap("The cat sat on a mat.", { removeArticles: true }),
+  "cat sat on mat."
+);
 
-\`\`\`js
-// The answer
-const the = true;
-\`\`\`
-
-Use the   result.`;
-
-const mixedExpected = `function below is best:
+const codeWithArticles = `The function below uses the variable:
 
 \`\`\`js
-//  answer
-const  = true;
+const the = "article";
+function a() {
+  return the;
+}
 \`\`\`
 
-Use result.`;
+Call \`a()\` to get the result.`;
 
-assert("removeArticles applies to prose but not inside fenced code", tokenZap(mixedInput, { removeArticles: true }), mixedExpected);
+const codeExpected = `function below uses variable:
+
+\`\`\`js
+const the = "article";
+function a() {
+  return the;
+}
+\`\`\`
+
+Call \`a()\` to get result.`;
+
+assert(
+  "preserves articles inside fenced code blocks",
+  tokenZap(codeWithArticles, { removeArticles: true }),
+  codeExpected
+);
+
+assert(
+  "preserves articles inside inline code",
+  tokenZap("Use the `the` variable for a test.", { removeArticles: true }),
+  "Use `the` variable for test."
+);
+
+const tableWithArticles = `The table below shows the data:
+
+| Name | The Value |
+|------|-----------|
+| a    | 100       |
+| the  | 200       |
+
+That is the summary.`;
+
+const articlesTableExpected = `table below shows data:
+
+| Name | The Value |
+|------|-----------|
+| a    | 100       |
+| the  | 200       |
+
+That is summary.`;
+
+assert(
+  "preserves articles inside markdown tables",
+  tokenZap(tableWithArticles, { removeArticles: true }),
+  articlesTableExpected
+);
+
+assert(
+  "removes articles everywhere when preserveCodeBlocks is false",
+  tokenZap("The code: `the value` and a test.", { removeArticles: true, preserveCodeBlocks: false }),
+  "code: ` value` and test."
+);
 
 console.log("\ntrimExtraSpaces: false");
 
