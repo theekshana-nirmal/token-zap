@@ -1,12 +1,22 @@
+export interface Zone {
+  content: string;
+  protected: boolean;
+}
+
+interface ZoneMatch {
+  start: number;
+  content: string;
+}
+
 /**
  * Splits input text into an ordered list of segments, each marked as either
  * protected (code blocks, inline code, tables) or prose (safe to transform).
  *
- * @param {string} text - The full input string.
- * @returns {Array<{ content: string, protected: boolean }>}
+ * @param text - The full input string.
+ * @returns An ordered array of zone segments.
  */
-export function extractZones(text) {
-  const segments = [];
+export function extractZones(text: string): Zone[] {
+  const segments: Zone[] = [];
   let remaining = text;
 
   while (remaining.length > 0) {
@@ -14,8 +24,9 @@ export function extractZones(text) {
     const table = findTable(remaining);
     const inline = findInlineCode(remaining);
 
-    // Pick whichever protected zone starts earliest
-    const candidates = [fenced, table, inline].filter(Boolean);
+    const candidates: ZoneMatch[] = [fenced, table, inline].filter(
+      (c): c is ZoneMatch => c !== null,
+    );
 
     if (candidates.length === 0) {
       segments.push({ content: remaining, protected: false });
@@ -40,12 +51,8 @@ export function extractZones(text) {
 
 /**
  * Finds the first fenced code block (``` or ~~~) in the text.
- *
- * @param {string} text
- * @returns {{ start: number, content: string } | null}
  */
-function findFencedBlock(text) {
-  // Matches ``` or ~~~ fences, with optional language tag, capturing everything up to closing fence
+function findFencedBlock(text: string): ZoneMatch | null {
   const pattern = /^(```|~~~)[^\n]*\n[\s\S]*?^\1\s*$/m;
   const match = pattern.exec(text);
   if (!match) return null;
@@ -54,14 +61,10 @@ function findFencedBlock(text) {
 
 /**
  * Finds the first inline code span (`...`) in the text.
- * Will not match if the position is already inside a fenced block (handled by
- * segment ordering in extractZones — fenced blocks take priority via earliest-start logic).
- *
- * @param {string} text
- * @returns {{ start: number, content: string } | null}
+ * Fenced blocks take priority over inline code via earliest-start
+ * comparison in extractZones, so this alone will not split fenced content.
  */
-function findInlineCode(text) {
-  // Matches a backtick-delimited span that does not cross a newline
+function findInlineCode(text: string): ZoneMatch | null {
   const pattern = /`[^`\n]+`/;
   const match = pattern.exec(text);
   if (!match) return null;
@@ -70,20 +73,16 @@ function findInlineCode(text) {
 
 /**
  * Finds the first markdown table block in the text.
- * A table is detected as a consecutive group of lines where every non-blank
- * line starts with a pipe character.
- *
- * @param {string} text
- * @returns {{ start: number, content: string } | null}
+ * A table is a consecutive group of lines where every non-blank line
+ * starts with a pipe character.
  */
-function findTable(text) {
+function findTable(text: string): ZoneMatch | null {
   const lines = text.split("\n");
   let tableStart = -1;
   let tableEnd = -1;
   let charOffset = 0;
 
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i];
+  for (const line of lines) {
     const isPipeLine = line.trimStart().startsWith("|");
 
     if (isPipeLine && tableStart === -1) {
@@ -95,10 +94,9 @@ function findTable(text) {
       break;
     }
 
-    charOffset += line.length + 1; // +1 for the \n
+    charOffset += line.length + 1;
   }
 
-  // Table runs to end of text
   if (tableStart !== -1 && tableEnd === -1) {
     tableEnd = text.length;
   }

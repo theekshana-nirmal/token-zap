@@ -1,4 +1,5 @@
 # TokenZap
+
 <div>
   <img src="assets/logo.webp" alt="TokenZap Logo" width="800">
 </div>
@@ -16,6 +17,7 @@ npm install @theenix/token-zap
 ```
 
 ## Usage
+
 ### Basic Guide
 
 TokenZap exports a single function called `tokenZap` that accepts a text string and an options object. Here is a simple example:
@@ -34,9 +36,11 @@ console.log(cleaned);
 
 The `tokenZap` function accepts the following options:
 
-- **removeArticles** (boolean, default: `false`) - When set to `true`, removes articles like "a", "an", and "the" from the text. This can further reduce token count but may affect readability.
-
 - **trimExtraSpaces** (boolean, default: `true`) - When set to `true`, removes extra spaces and collapses multiple spaces into single spaces. This option is enabled by default.
+
+- **preserveCodeBlocks** (boolean, default: `true`) - When set to `true`, protects fenced code blocks (` ``` `), inline code (`` ` ``), and markdown tables from space-trimming logic. This ensures code indentation and formatting remain intact while still optimizing surrounding prose. Set to `false` to apply space-trimming everywhere (use with caution if your text contains code).
+
+- **removeArticles** (boolean, default: `false`) - When set to `true`, removes articles like "a", "an", and "the" from the text. This can further reduce token count but may affect readability. **Note:** This option is not currently zone-aware and will remove articles from inside code blocks too. Avoid combining it with prompts containing code until a future update addresses this.
 
 ### Examples
 
@@ -51,6 +55,42 @@ const result = tokenZap(text);
 console.log(result);
 // Output: "This is a line with extra spaces."
 ```
+
+#### Safely Clean Prompts with Mixed Code and Prose
+
+````js
+import { tokenZap } from "@theenix/token-zap";
+
+const prompt = `Here is   the function:
+
+\`\`\`js
+function   greet( name ) {
+    return   "Hello, " + name;
+}
+\`\`\`
+
+Call   it like   this: \`greet(  "Alice"  )\`
+
+That is   how it   works.`;
+
+const result = tokenZap(prompt);
+
+console.log(result);
+// Output:
+// Here is the function:
+//
+// ```js
+// function   greet( name ) {
+//     return   "Hello, " + name;
+// }
+// ```
+//
+// Call it like this: `greet(  "Alice"  )`
+//
+// That is how it works.
+````
+
+Notice how spaces inside the fenced code block and inline code spans are preserved exactly, while extra spaces in the prose are collapsed.
 
 #### Remove Articles and Extra Spaces
 
@@ -76,6 +116,20 @@ console.log(result);
 // Output: "This is     sample."
 ```
 
+#### Disable Code Block Protection (Use Carefully)
+
+````js
+import { tokenZap } from "@theenix/token-zap";
+
+const text = "Code:   ```let   x = 5;```   Done.";
+const result = tokenZap(text, { preserveCodeBlocks: false });
+
+console.log(result);
+// Output: "Code: ```let x = 5;``` Done."
+````
+
+When `preserveCodeBlocks` is `false`, space-collapsing applies everywhere, including inside code. Only disable this if you are certain your text contains no code or structured content.
+
 ## Future Plans
 
 TokenZap is actively being developed. Here are some features planned for future releases:
@@ -86,6 +140,7 @@ TokenZap is actively being developed. Here are some features planned for future 
 - Customizable word removal lists for domain-specific text optimization.
 - Performance improvements for processing large text documents.
 - Integration with popular LLM libraries for seamless prompt optimization.
+- Zone-aware `removeArticles` to safely skip article removal inside code blocks.
 
 ## Repository Link
 

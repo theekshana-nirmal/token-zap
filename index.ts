@@ -1,7 +1,10 @@
 import { removeArticles as rmArticles } from "./utils/removeArticles.js";
 import { trimExtraSpaces as trimSpaces } from "./utils/trimExtraSpaces.js";
+import type { TokenZapOptions } from "./types.js";
 
-export function tokenZap(text, options = {}) {
+export type { TokenZapOptions };
+
+export function tokenZap(text: string, options: TokenZapOptions = {}): string {
   const {
     removeArticles = false,
     trimExtraSpaces = true,
