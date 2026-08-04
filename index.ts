@@ -12,7 +12,7 @@ export function tokenZap(text: string, options: TokenZapOptions = {}): string {
   } = options;
 
   if (removeArticles) {
-    text = rmArticles(text);
+    text = rmArticles(text, preserveCodeBlocks);
   }
 
   if (trimExtraSpaces) {
