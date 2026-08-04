@@ -2,9 +2,12 @@
   "name": "@theenix/token-zap",
   "version": "1.0.1",
   "description": "Shrink your LLM prompts instantly. TokenZap removes wasteful spacing and unnecessary characters to keep your API payloads lean and token-efficient.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "node test/test.js"
+    "build": "tsc",
+    "pretest": "npm run build",
+    "test": "node dist/test/test.js",
+    "prepublishOnly": "npm run build"
   },
   "type": "module",
   "repository": {
@@ -16,12 +19,14 @@
     "url": "https://github.com/theekshana-nirmal/token-zap/issues"
   },
   "exports": {
-    ".": "./index.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
   },
   "files": [
-    "index.js",
+    "dist",
     "README.md",
-    "utils/",
     "LICENSE"
   ],
   "keywords": [
@@ -35,5 +40,10 @@
     "tokenizer"
   ],
   "author": "Theekshana Nirmal <131228387+theekshana-nirmal@users.noreply.github.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "types": "dist/index.d.ts",
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "typescript": "^7.0.2"
+  }
 }
