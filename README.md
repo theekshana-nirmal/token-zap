@@ -37,6 +37,9 @@ console.log(cleaned);
 | `trimExtraSpaces`    | boolean | `true`  | Collapses multiple consecutive spaces into one and removes trailing whitespace per line |
 | `preserveCodeBlocks` | boolean | `true`  | Protects fenced code blocks, inline code, and markdown tables from all transforms       |
 | `removeArticles`     | boolean | `false` | Removes English articles ("a", "an", "the") from prose to reduce token count            |
+| `stripDecorative`    | boolean | `true`  | Removes decorative separator lines and collapses excessive blank lines                  |
+
+See [docs/strip-decorative.md](docs/strip-decorative.md) for full examples and edge case reference.
 
 ### Examples
 
