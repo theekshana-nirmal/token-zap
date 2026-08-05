@@ -4,6 +4,23 @@ All notable changes to this project will be documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 Versioning follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- `stripDecorative` option (default: `true`) - removes decorative separator lines (repeated `-`, `=`, `*`, `_`, `~`, `+`, `#`) and collapses 3+ blank lines into one (#11)
+- `docs/strip-decorative.md` - detailed before/after examples and edge case reference for `stripDecorative`
+- `utils/collapseBlankLines.ts` - shared blank-line collapsing helper, extracted from `trimExtraSpaces` for reuse across transforms
+
+### Changed
+
+- Migrated test suite from a custom assertion runner to Vitest for better isolation, reporting, and scalability as test count grows
+- `trimExtraSpaces` now delegates blank-line collapsing to the shared `collapseBlankLines` helper (no behavior change)
+
+### Fixed
+
+- `extractZones` no longer absorbs the trailing newline after a fenced code block's closing fence or a table's final row into the protected zone content. This boundary bug was latent in v1.1.0 but did not surface until line-splitting transforms (`stripDecorative`) were introduced, since prior transforms did not rely on exact line boundaries at zone edges.
+
 ## [1.1.0] - 2026-08-04
 
 ### Added
@@ -39,3 +56,4 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 - Initial release
 - `trimExtraSpaces` option
 - `removeArticles` option
+
