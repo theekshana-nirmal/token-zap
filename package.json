@@ -1,12 +1,12 @@
 {
   "name": "@theenix/token-zap",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Shrink your LLM prompts instantly. TokenZap removes wasteful spacing and unnecessary characters to keep your API payloads lean and token-efficient.",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "pretest": "npm run build",
-    "test": "node dist/test/test.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "prepublishOnly": "npm run build"
   },
   "type": "module",
@@ -44,6 +44,7 @@
   "types": "dist/index.d.ts",
   "devDependencies": {
     "@types/node": "^26.1.2",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vitest": "^2.0.0"
   }
 }
