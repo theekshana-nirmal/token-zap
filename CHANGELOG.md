@@ -4,7 +4,7 @@ All notable changes to this project will be documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 Versioning follows [Semantic Versioning](https://semver.org/).
 
-## [Unreleased]
+## [1.2.0] - 2026-08-05
 
 ### Added
 
@@ -56,4 +56,5 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 - Initial release
 - `trimExtraSpaces` option
 - `removeArticles` option
+
 
