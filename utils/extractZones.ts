@@ -51,9 +51,12 @@ export function extractZones(text: string): Zone[] {
 
 /**
  * Finds the first fenced code block (``` or ~~~) in the text.
+ * The trailing [ \t]* (not \s*) ensures only horizontal whitespace on the
+ * closing fence's own line is consumed, so the newline that separates the
+ * fence from following content stays with the surrounding prose zone.
  */
 function findFencedBlock(text: string): ZoneMatch | null {
-  const pattern = /^(```|~~~)[^\n]*\n[\s\S]*?^\1\s*$/m;
+  const pattern = /^(```|~~~)[^\n]*\n[\s\S]*?^\1[ \t]*$/m;
   const match = pattern.exec(text);
   if (!match) return null;
   return { start: match.index, content: match[0] };
@@ -74,23 +77,27 @@ function findInlineCode(text: string): ZoneMatch | null {
 /**
  * Finds the first markdown table block in the text.
  * A table is a consecutive group of lines where every non-blank line
- * starts with a pipe character.
+ * starts with a pipe character. The table's content ends at the last
+ * pipe line's own content, excluding its trailing newline, so that
+ * newline remains part of the following prose zone.
  */
 function findTable(text: string): ZoneMatch | null {
   const lines = text.split("\n");
   let tableStart = -1;
   let tableEnd = -1;
+  let lastPipeLineEnd = -1;
   let charOffset = 0;
 
   for (const line of lines) {
     const isPipeLine = line.trimStart().startsWith("|");
 
-    if (isPipeLine && tableStart === -1) {
-      tableStart = charOffset;
-    }
-
-    if (!isPipeLine && tableStart !== -1) {
-      tableEnd = charOffset;
+    if (isPipeLine) {
+      if (tableStart === -1) {
+        tableStart = charOffset;
+      }
+      lastPipeLineEnd = charOffset + line.length;
+    } else if (tableStart !== -1) {
+      tableEnd = lastPipeLineEnd;
       break;
     }
 
@@ -98,7 +105,7 @@ function findTable(text: string): ZoneMatch | null {
   }
 
   if (tableStart !== -1 && tableEnd === -1) {
-    tableEnd = text.length;
+    tableEnd = lastPipeLineEnd;
   }
 
   if (tableStart === -1) return null;

@@ -1,4 +1,5 @@
 import { extractZones } from "./extractZones.js";
+import { collapseBlankLines } from "./collapseBlankLines.js";
 
 const PLACEHOLDER_MARKER = "\u0000";
 
@@ -42,14 +43,12 @@ export function trimExtraSpaces(text: string, preserveCodeBlocks: boolean = true
 }
 
 /**
- * Collapses multiple consecutive spaces into one, removes leading/trailing
- * whitespace, collapses excessive blank lines, and strips trailing
- * whitespace at the end of each line.
+ * Collapses multiple consecutive spaces into one, removes trailing whitespace
+ * per line, collapses excessive blank lines, and trims the overall string.
  */
 function collapseSpaces(text: string): string {
-  return text
-    .replace(/ +/g, " ")
-    .replace(/\n{3,}/g, "\n\n")
-    .replace(/[ \t]+$/gm, "")
-    .trim();
+  let result = text.replace(/ +/g, " ");
+  result = collapseBlankLines(result);
+  result = result.replace(/[ \t]+$/gm, "");
+  return result.trim();
 }
