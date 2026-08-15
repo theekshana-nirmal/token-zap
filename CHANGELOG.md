@@ -75,3 +75,4 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 - `trimExtraSpaces` option
 - `removeArticles` option
 
+

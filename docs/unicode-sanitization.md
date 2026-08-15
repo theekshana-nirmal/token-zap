@@ -42,7 +42,7 @@ tokenZap(text); // Automatically applies NFC normalization
 ### Sanitize Unicode (Default Behavior)
 
 ```ts
-import { tokenZap } from "@theenix/token-zap";
+import { tokenZap } from "@thee-nix/token-zap";
 
 const text = "\uFEFFHello\u200B world";
 const result = tokenZap(text);

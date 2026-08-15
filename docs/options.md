@@ -5,7 +5,7 @@ Complete documentation for all TokenZap configuration options.
 ## Overview
 
 ```ts
-import { tokenZap, TokenZapOptions } from "@theenix/token-zap";
+import { tokenZap, TokenZapOptions } from "@thee-nix/token-zap";
 
 const options: TokenZapOptions = {
   sanitizeUnicode: true, // Remove invisible characters (default: on)
