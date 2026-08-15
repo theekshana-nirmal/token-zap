@@ -3,4 +3,6 @@ export interface TokenZapOptions {
   trimExtraSpaces?: boolean;
   preserveCodeBlocks?: boolean;
   stripDecorative?: boolean;
+  sanitizeUnicode?: boolean;
+  normalizeTypography?: boolean;
 }

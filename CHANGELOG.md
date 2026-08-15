@@ -4,7 +4,25 @@ All notable changes to this project will be documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 Versioning follows [Semantic Versioning](https://semver.org/).
 
-## [1.2.0] - 2026-08-05
+## [1.3.0] - 2026-08-15
+
+### Added
+
+- **Unicode sanitization (default: enabled)** - Removes invisible characters (zero-width spaces, BOM, non-breaking spaces, soft hyphens, direction marks) and applies NFC normalization. This is always safe and reduces hidden token waste (#7)
+- **Typography normalization (opt-in)** - Converts smart quotes, em dashes, en dashes, and ellipsis to plain ASCII equivalents. Disabled by default because it changes visual style (#7)
+- `docs/unicode-sanitization.md` - complete guide to Unicode sanitization and typography normalization
+- `docs/options.md` - comprehensive options reference covering all transforms
+- `docs/examples.md` - usage examples for all features
+- `utils/sanitizeUnicode.ts` - removes invisible Unicode characters and applies NFC normalization
+- `utils/normalizeTypography.ts` - converts smart quotes and typographic characters to ASCII
+
+### Changed
+
+- **Test suite reorganized** - Split monolithic test file into 6 focused files (`trimExtraSpaces.spec.ts`, `preserveCodeBlocks.spec.ts`, `removeArticles.spec.ts`, `stripDecorative.spec.ts`, `sanitizeUnicode.spec.ts`, `normalizeTypography.spec.ts`) for better maintainability
+- **README restructured** - Condensed to compact overview with links to detailed documentation in `docs/`
+- Pipeline now runs `sanitizeUnicode` first (before all other transforms) to ensure clean input for subsequent processing
+
+## [1.2.0] - 2026-08-15
 
 ### Added
 
@@ -56,5 +74,4 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 - Initial release
 - `trimExtraSpaces` option
 - `removeArticles` option
-
 
