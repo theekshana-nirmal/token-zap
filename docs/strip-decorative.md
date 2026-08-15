@@ -140,7 +140,7 @@ Closing text.
 ## Disabling the Option
 
 ```ts
-import { tokenZap } from "@theenix/token-zap";
+import { tokenZap } from "@thee-nix/token-zap";
 
 const result = tokenZap(text, { stripDecorative: false });
 ```

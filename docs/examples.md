@@ -7,7 +7,7 @@ Real-world examples of TokenZap in action.
 ### Collapse Extra Spaces
 
 ```ts
-import { tokenZap } from "@theenix/token-zap";
+import { tokenZap } from "@thee-nix/token-zap";
 
 const text = "This  has   extra    spaces.";
 const result = tokenZap(text);
@@ -205,7 +205,7 @@ console.log(result);
 ## TypeScript Usage
 
 ```ts
-import { tokenZap, TokenZapOptions } from "@theenix/token-zap";
+import { tokenZap, TokenZapOptions } from "@thee-nix/token-zap";
 
 const options: TokenZapOptions = {
   trimExtraSpaces: true,

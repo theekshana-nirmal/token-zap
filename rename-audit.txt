@@ -1,0 +1,27 @@
+=== FILES CONTAINING @theenix/token-zap ===
+
+--- E:\Projects\code-projects\token-zap\docs\examples.md ---
+  Line 10: import { tokenZap } from "@theenix/token-zap";
+  Line 208: import { tokenZap, TokenZapOptions } from "@theenix/token-zap";
+
+--- E:\Projects\code-projects\token-zap\docs\options.md ---
+  Line 8: import { tokenZap, TokenZapOptions } from "@theenix/token-zap";
+
+--- E:\Projects\code-projects\token-zap\docs\strip-decorative.md ---
+  Line 143: import { tokenZap } from "@theenix/token-zap";
+
+--- E:\Projects\code-projects\token-zap\docs\unicode-sanitization.md ---
+  Line 45: import { tokenZap } from "@theenix/token-zap";
+
+--- E:\Projects\code-projects\token-zap\package-lock.json ---
+  Line 2: "name": "@theenix/token-zap",
+  Line 8: "name": "@theenix/token-zap",
+
+--- E:\Projects\code-projects\token-zap\package.json ---
+  Line 2: "name": "@theenix/token-zap",
+
+--- E:\Projects\code-projects\token-zap\README.md ---
+  Line 12: npm install @theenix/token-zap
+  Line 18: import { tokenZap } from "@theenix/token-zap";
+  Line 61: import { tokenZap, TokenZapOptions } from "@theenix/token-zap";
+

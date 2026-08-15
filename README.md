@@ -9,13 +9,13 @@ TokenZap is a lightweight, deterministic text optimizer for LLM prompts. It remo
 ## Installation
 
 ```bash
-npm install @theenix/token-zap
+npm install @thee-nix/token-zap
 ```
 
 ## Quick Start
 
 ```ts
-import { tokenZap } from "@theenix/token-zap";
+import { tokenZap } from "@thee-nix/token-zap";
 
 const text = "This  has   extra spaces and\u200Binvisible chars.";
 const cleaned = tokenZap(text);
@@ -58,7 +58,7 @@ See [docs/options.md](docs/options.md) for complete reference.
 TokenZap is written in TypeScript and ships with full type declarations:
 
 ```ts
-import { tokenZap, TokenZapOptions } from "@theenix/token-zap";
+import { tokenZap, TokenZapOptions } from "@thee-nix/token-zap";
 
 const options: TokenZapOptions = {
   trimExtraSpaces: true,
