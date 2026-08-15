@@ -1,6 +1,6 @@
 {
   "name": "@theenix/token-zap",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Shrink your LLM prompts instantly. TokenZap removes wasteful spacing and unnecessary characters to keep your API payloads lean and token-efficient.",
   "main": "dist/index.js",
   "scripts": {
@@ -48,4 +48,3 @@
     "vitest": "^2.0.0"
   }
 }
-
