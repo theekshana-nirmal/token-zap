@@ -130,13 +130,13 @@ console.log(result);
 
 **Warning:** Only use if your text contains no code or structured content.
 
-```ts
+````ts
 const text = "Code:   ```let   x = 5;```   done.";
 const result = tokenZap(text, { preserveCodeBlocks: false });
 
 console.log(result);
 // Output: "Code: ```let x = 5;``` done."
-```
+````
 
 ---
 
@@ -194,7 +194,10 @@ console.log(result);
 
 ```ts
 const text = "hello\u200Bworld";
-const result = tokenZap(text, { sanitizeUnicode: false, trimExtraSpaces: false });
+const result = tokenZap(text, {
+  sanitizeUnicode: false,
+  trimExtraSpaces: false,
+});
 
 console.log(result);
 // Output: "hello\u200Bworld" (zero-width space preserved)
@@ -218,3 +221,72 @@ const options: TokenZapOptions = {
 
 const result = tokenZap("Your   text here", options);
 ```
+
+## Token Analytics
+
+### Basic Usage with Custom Tokenizer
+
+``typescript
+import { tokenZap } from "@thee-nix/token-zap";
+
+const text = "The quick brown fox";
+
+const result = tokenZap(text, {
+report: true,
+tokenizer: (text) => Math.ceil(text.length / 4),
+removeArticles: true,
+trimExtraSpaces: true
+});
+
+console.log(result.output);
+// "quick brown fox"
+
+console.log(result.stats);
+// {
+// originalTokens: 8,
+// cleanedTokens: 4,
+// tokensSaved: 4,
+// percentSaved: 50.0
+// }
+``
+
+### Using js-tiktoken for Accurate Counts
+
+``typescript
+import { tokenZap } from "@thee-nix/token-zap";
+// Requires: npm install js-tiktoken
+
+const longPrompt = /_ your LLM prompt _/;
+
+const result = tokenZap(longPrompt, { report: true });
+
+console.log(`Saved \ tokens (`\%)`);
+``
+
+### Cost Estimation Example
+
+``typescript
+import { tokenZap } from "@thee-nix/token-zap";
+import { encodingForModel } from "js-tiktoken";
+
+const encoder = encodingForModel("gpt-4");
+
+function optimizeAndEstimateCost(text: string) {
+const result = tokenZap(text, {
+report: true,
+tokenizer: (t) => encoder.encode(t).length,
+trimExtraSpaces: true,
+sanitizeUnicode: true,
+stripDecorative: true
+});
+
+const GPT4_INPUT_COST_PER_TOKEN = 0.00003;
+const costSaved = result.stats.tokensSaved \* GPT4_INPUT_COST_PER_TOKEN;
+
+return {
+optimizedText: result.output,
+tokensSaved: result.stats.tokensSaved,
+costSaved: `\$`\`
+};
+}
+``
