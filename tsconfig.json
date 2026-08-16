@@ -17,11 +17,11 @@
   "include": [
     "index.ts",
     "types.ts",
-    "utils/**/*.ts",
-    "test/**/*.ts"
+    "utils/**/*.ts"
   ],
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
+    "test"
   ]
 }
