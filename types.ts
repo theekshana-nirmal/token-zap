@@ -5,4 +5,18 @@ export interface TokenZapOptions {
   stripDecorative?: boolean;
   sanitizeUnicode?: boolean;
   normalizeTypography?: boolean;
+  report?: boolean;
+  tokenizer?: (text: string) => number;
+}
+
+export interface TokenZapStats {
+  originalTokens: number;
+  cleanedTokens: number;
+  tokensSaved: number;
+  percentSaved: number;
+}
+
+export interface TokenZapResult {
+  output: string;
+  stats: TokenZapStats;
 }

@@ -1,21 +1,42 @@
 # Changelog
 
+## [1.4.0] - TBD
+
+### Added
+
+- **Token Analytics (#5)** - Real token counting with `report: true` option
+  - Returns `{ output, stats }` with `originalTokens`, `cleanedTokens`, `tokensSaved`, `percentSaved`
+  - Optional peer dependency: `js-tiktoken` for accurate OpenAI token counts
+  - Custom tokenizer support via `tokenizer` option
+  - Comprehensive documentation in `docs/token-analytics.md`
+- TypeScript function overloads for type-safe `report` option
+- New exported types: `TokenZapResult`, `TokenZapStats`
+
+### Changed
+
+- `TokenZapOptions` interface now includes `report?: boolean` and `tokenizer?: (text: string) => number`
+
+---
+
 All notable changes to this project will be documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 Versioning follows [Semantic Versioning](https://semver.org/).
 
 ## [1.3.0] - 2026-08-15
+
 ### BREAKING CHANGE
 
 - **Package renamed from `@theenix/token-zap` to `@thee-nix/token-zap`**. The scope now matches the maintainer's npm username exactly. The old package name remains published at v1.2.0 with a deprecation notice but will not receive further updates.
 
   Update your import:
+
   ```diff
   - import { tokenZap } from "@theenix/token-zap";
   + import { tokenZap } from "@thee-nix/token-zap";
   ```
 
   Update your install command:
+
   ```diff
   - npm install @theenix/token-zap
   + npm install @thee-nix/token-zap
@@ -89,7 +110,3 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 - Initial release
 - `trimExtraSpaces` option
 - `removeArticles` option
-
-
-
-
