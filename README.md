@@ -4,7 +4,7 @@
   <img src="assets/logo.webp" alt="TokenZap Logo" width="800">
 </div>
 
-TokenZap is a lightweight, deterministic text optimizer for LLM prompts. It removes hidden token waste—extra spaces, invisible characters, decorative formatting—without changing semantic meaning.
+TokenZap is a lightweight, deterministic text optimizer for LLM prompts. It removes hidden token waste-extra spaces, invisible characters, decorative formatting-without changing semantic meaning.
 
 ## Installation
 

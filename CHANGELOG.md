@@ -1,13 +1,12 @@
 # Changelog
 
-## [1.4.0] - TBD
+## [1.4.0] - 2026-08-16
 
 ### Added
 
 - **Token Analytics (#5)** - Real token counting with `report: true` option
   - Returns `{ output, stats }` with `originalTokens`, `cleanedTokens`, `tokensSaved`, `percentSaved`
-  - Optional peer dependency: `js-tiktoken` for accurate OpenAI token counts
-  - Custom tokenizer support via `tokenizer` option
+  - User-provided tokenizer function via `tokenizer` option (works with any LLM provider)
   - Comprehensive documentation in `docs/token-analytics.md`
 - TypeScript function overloads for type-safe `report` option
 - New exported types: `TokenZapResult`, `TokenZapStats`
