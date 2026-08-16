@@ -3,6 +3,11 @@
   "version": "1.4.0",
   "description": "Shrink your LLM prompts instantly. TokenZap removes wasteful spacing and unnecessary characters to keep your API payloads lean and token-efficient.",
   "main": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "vitest run",
@@ -24,11 +29,6 @@
       "default": "./dist/index.js"
     }
   },
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE"
-  ],
   "keywords": [
     "llm",
     "prompt-engineering",
