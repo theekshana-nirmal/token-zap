@@ -12,6 +12,19 @@ TokenZap is a lightweight, deterministic text optimizer for LLM prompts. It remo
 npm install @thee-nix/token-zap
 ```
 
+**New in v1.4.0:** Get real token savings with `report: true`:
+
+``typescript
+const result = tokenZap(text, {
+report: true,
+tokenizer: (text) => Math.ceil(text.length / 4)
+});
+
+console.log(result.stats.tokensSaved); // See actual token count reduction
+``
+
+See [Token Analytics Guide](./docs/token-analytics.md) for details.
+
 ## Quick Start
 
 ```ts
@@ -23,6 +36,19 @@ const cleaned = tokenZap(text);
 console.log(cleaned);
 // Output: "This has extra spaces and invisible chars."
 ```
+
+**New in v1.4.0:** Get real token savings with `report: true`:
+
+``typescript
+const result = tokenZap(text, {
+report: true,
+tokenizer: (text) => Math.ceil(text.length / 4)
+});
+
+console.log(result.stats.tokensSaved); // See actual token count reduction
+``
+
+See [Token Analytics Guide](./docs/token-analytics.md) for details.
 
 ## Features
 
@@ -72,6 +98,19 @@ const options: TokenZapOptions = {
 const result = tokenZap("Hello   world", options);
 ```
 
+**New in v1.4.0:** Get real token savings with `report: true`:
+
+``typescript
+const result = tokenZap(text, {
+report: true,
+tokenizer: (text) => Math.ceil(text.length / 4)
+});
+
+console.log(result.stats.tokensSaved); // See actual token count reduction
+``
+
+See [Token Analytics Guide](./docs/token-analytics.md) for details.
+
 ## Contributing
 
 ```bash
@@ -79,6 +118,19 @@ npm install   # Install dependencies
 npm run build # Compile TypeScript
 npm test      # Run all tests
 ```
+
+**New in v1.4.0:** Get real token savings with `report: true`:
+
+``typescript
+const result = tokenZap(text, {
+report: true,
+tokenizer: (text) => Math.ceil(text.length / 4)
+});
+
+console.log(result.stats.tokensSaved); // See actual token count reduction
+``
+
+See [Token Analytics Guide](./docs/token-analytics.md) for details.
 
 ## Repository
 
