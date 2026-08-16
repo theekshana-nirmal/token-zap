@@ -14,14 +14,14 @@ npm install @thee-nix/token-zap
 
 **New in v1.4.0:** Get real token savings with `report: true`:
 
-``typescript
+```typescript
 const result = tokenZap(text, {
-report: true,
-tokenizer: (text) => Math.ceil(text.length / 4)
+  report: true,
+  tokenizer: (text) => Math.ceil(text.length / 4),
 });
 
 console.log(result.stats.tokensSaved); // See actual token count reduction
-``
+```
 
 See [Token Analytics Guide](./docs/token-analytics.md) for details.
 
@@ -39,14 +39,14 @@ console.log(cleaned);
 
 **New in v1.4.0:** Get real token savings with `report: true`:
 
-``typescript
+```typescript
 const result = tokenZap(text, {
-report: true,
-tokenizer: (text) => Math.ceil(text.length / 4)
+  report: true,
+  tokenizer: (text) => Math.ceil(text.length / 4),
 });
 
 console.log(result.stats.tokensSaved); // See actual token count reduction
-``
+```
 
 See [Token Analytics Guide](./docs/token-analytics.md) for details.
 
@@ -100,14 +100,14 @@ const result = tokenZap("Hello   world", options);
 
 **New in v1.4.0:** Get real token savings with `report: true`:
 
-``typescript
+```typescript
 const result = tokenZap(text, {
-report: true,
-tokenizer: (text) => Math.ceil(text.length / 4)
+  report: true,
+  tokenizer: (text) => Math.ceil(text.length / 4),
 });
 
 console.log(result.stats.tokensSaved); // See actual token count reduction
-``
+```
 
 See [Token Analytics Guide](./docs/token-analytics.md) for details.
 
@@ -121,14 +121,14 @@ npm test      # Run all tests
 
 **New in v1.4.0:** Get real token savings with `report: true`:
 
-``typescript
+```typescript
 const result = tokenZap(text, {
-report: true,
-tokenizer: (text) => Math.ceil(text.length / 4)
+  report: true,
+  tokenizer: (text) => Math.ceil(text.length / 4),
 });
 
 console.log(result.stats.tokensSaved); // See actual token count reduction
-``
+```
 
 See [Token Analytics Guide](./docs/token-analytics.md) for details.
 
