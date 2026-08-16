@@ -193,3 +193,55 @@ tokenZap(text, {
 // Returns text unchanged (except preserveCodeBlocks logic still runs)
 ```
 
+## `report`
+
+**Type:** `boolean`  
+**Default:** `false`  
+**Added in:** v1.4.0
+
+Returns token analytics instead of just the cleaned string.
+
+When `true`, returns `{ output: string, stats: TokenZapStats }` instead of plain `string`.
+
+Requires either:
+
+- `js-tiktoken` installed (`npm install js-tiktoken`)
+- Custom tokenizer via `tokenizer` option
+
+``typescript
+const result = tokenZap(text, {
+report: true,
+tokenizer: (text) => Math.ceil(text.length / 4)
+});
+
+console.log(result.stats.tokensSaved); // 42
+``
+
+See [Token Analytics Guide](./token-analytics.md) for details.
+
+---
+
+## `tokenizer`
+
+**Type:** `(text: string) => number`  
+**Default:** Uses `js-tiktoken` if available, otherwise throws error  
+**Added in:** v1.4.0
+
+Custom function to count tokens. Only used when `report: true`.
+
+``typescript
+import { encodingForModel } from "js-tiktoken";
+
+const encoder = encodingForModel("gpt-3.5-turbo");
+
+const result = tokenZap(text, {
+report: true,
+tokenizer: (text) => encoder.encode(text).length
+});
+``
+
+**Common tokenizers:**
+
+- Character-based: `(text) => text.length`
+- Word-based: `(text) => text.split(/\s+/).filter(Boolean).length`
+- GPT-4: `js-tiktoken` with `encodingForModel("gpt-4")`
