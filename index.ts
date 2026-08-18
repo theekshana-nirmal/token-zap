@@ -3,22 +3,28 @@ import { stripDecorative as stripDeco } from "./utils/stripDecorative.js";
 import { trimExtraSpaces as trimSpaces } from "./utils/trimExtraSpaces.js";
 import { sanitizeUnicode as sanitize } from "./utils/sanitizeUnicode.js";
 import { normalizeTypography as normalizeTypo } from "./utils/normalizeTypography.js";
+import { runPlugins } from "./utils/runPlugins.js";
 import { countTokens } from "./utils/tokenCount.js";
 import type { TokenZapOptions, TokenZapResult } from "./types.js";
 
-export type { TokenZapOptions, TokenZapResult, TokenZapStats } from "./types.js";
+export type {
+  TokenZapOptions,
+  TokenZapResult,
+  TokenZapStats,
+  TokenZapPlugin,
+} from "./types.js";
 
 export function tokenZap(
   text: string,
-  options?: TokenZapOptions & { report?: false }
+  options?: TokenZapOptions & { report?: false },
 ): string;
 export function tokenZap(
   text: string,
-  options: TokenZapOptions & { report: true }
+  options: TokenZapOptions & { report: true },
 ): TokenZapResult;
 export function tokenZap(
   text: string,
-  options: TokenZapOptions = {}
+  options: TokenZapOptions = {},
 ): string | TokenZapResult {
   const {
     removeArticles = false,
@@ -29,6 +35,7 @@ export function tokenZap(
     normalizeTypography = false,
     report = false,
     tokenizer,
+    plugins = [],
   } = options;
 
   let originalTokens = 0;
@@ -54,6 +61,10 @@ export function tokenZap(
 
   if (trimExtraSpaces) {
     text = trimSpaces(text, preserveCodeBlocks);
+  }
+
+  if (plugins.length > 0) {
+    text = runPlugins(text, plugins);
   }
 
   if (report) {

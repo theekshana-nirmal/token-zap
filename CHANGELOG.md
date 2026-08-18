@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.5.0] - TBD
+
+### Added
+
+- **Plugin System (#15)** - Add custom text-cleaning rules without forking TokenZap
+  - New `plugins: []` option on `tokenZap()` accepts an array of `(text: string) => string` functions
+  - Plugins run last in the pipeline, after all built-in transforms, receiving the fully cleaned text
+  - Plugins are not zone-aware: protected zones (code blocks, tables) are already restored by the time plugins run (documented caveat)
+  - New exported type: `TokenZapPlugin`
+  - Comprehensive documentation in `docs/plugins.md`
+
+### Changed
+
+- `TokenZapOptions` interface now includes `plugins?: TokenZapPlugin[]`
+
+# Changelog
+
 ## [1.4.0] - 2026-08-16
 
 ### Added

@@ -14,6 +14,7 @@ const options: TokenZapOptions = {
   preserveCodeBlocks: true, // Protect code/tables (default: on)
   removeArticles: false, // Remove "a", "an", "the" (default: off)
   stripDecorative: true, // Remove separator lines (default: on)
+  plugins: [], // Custom user-defined text transforms (default: none)
 };
 
 const result = tokenZap(text, options);
@@ -158,6 +159,32 @@ See [strip-decorative.md](strip-decorative.md) for complete reference.
 
 ---
 
+### `plugins` (default: `[]`)
+
+Runs an ordered list of custom, user-defined text transforms after all built-in transforms have completed.
+
+**Type:** `TokenZapPlugin[]`, where `TokenZapPlugin` is `(text: string) => string`
+
+**Safe to enable by default:** N/A - opt-in by nature; empty array means no-op.
+
+**Runs last, after:** `sanitizeUnicode`, `normalizeTypography`, `removeArticles`, `stripDecorative`, `trimExtraSpaces`.
+
+**Not zone-aware:** Plugins run after protected zones have already been restored to their original content. A plugin can modify text inside code blocks or tables unless it explicitly avoids doing so.
+
+**Example:**
+
+```ts
+const redactNames: TokenZapPlugin = (text) =>
+  text.replace(/John Doe/g, "[REDACTED]");
+
+tokenZap("Contact John Doe for details.", { plugins: [redactNames] });
+// Output: "Contact [REDACTED] for details."
+```
+
+See [plugins.md](plugins.md) for the complete guide, including how to write zone-safe plugins.
+
+---
+
 ## Option Interactions
 
 ### Processing Order
@@ -169,6 +196,7 @@ Transforms run in this order:
 3. `removeArticles` - Content-level word removal
 4. `stripDecorative` - Removes separator lines and blank lines
 5. `trimExtraSpaces` - Final cleanup of leftover gaps
+6. `plugins` - Custom user-defined transforms, run last
 
 ### `preserveCodeBlocks: false`
 
@@ -179,6 +207,10 @@ tokenZap("Code: `let   x = 5;`", { preserveCodeBlocks: false });
 // Output: "Code: `let x = 5;`"
 // Spaces inside backticks were collapsed
 ```
+
+### Plugins and Zone Protection
+
+Plugins always run after `preserveCodeBlocks` protection has already been lifted (protected zones are restored before plugins execute), regardless of the `preserveCodeBlocks` setting. If your plugin must not touch code blocks or tables, implement that check inside the plugin itself. See [plugins.md](plugins.md) for an example.
 
 ### Disable All Transforms
 
@@ -195,8 +227,8 @@ tokenZap(text, {
 
 ## `report`
 
-**Type:** `boolean`  
-**Default:** `false`  
+**Type:** `boolean`
+**Default:** `false`
 **Added in:** v1.4.0
 
 Returns token analytics instead of just the cleaned string.
@@ -208,37 +240,37 @@ Requires either:
 - `js-tiktoken` installed (`npm install js-tiktoken`)
 - Custom tokenizer via `tokenizer` option
 
-``typescript
+```typescript
 const result = tokenZap(text, {
-report: true,
-tokenizer: (text) => Math.ceil(text.length / 4)
+  report: true,
+  tokenizer: (text) => Math.ceil(text.length / 4),
 });
 
 console.log(result.stats.tokensSaved); // 42
-``
+```
 
-See [Token Analytics Guide](./token-analytics.md) for details.
+If `plugins` are also provided, `cleanedTokens` reflects the text after plugins have run. See [Token Analytics Guide](./token-analytics.md) for details.
 
 ---
 
 ## `tokenizer`
 
-**Type:** `(text: string) => number`  
-**Default:** Uses `js-tiktoken` if available, otherwise throws error  
+**Type:** `(text: string) => number`
+**Default:** Uses `js-tiktoken` if available, otherwise throws error
 **Added in:** v1.4.0
 
 Custom function to count tokens. Only used when `report: true`.
 
-``typescript
+```typescript
 import { encodingForModel } from "js-tiktoken";
 
 const encoder = encodingForModel("gpt-3.5-turbo");
 
 const result = tokenZap(text, {
-report: true,
-tokenizer: (text) => encoder.encode(text).length
+  report: true,
+  tokenizer: (text) => encoder.encode(text).length,
 });
-``
+```
 
 **Common tokenizers:**
 
