@@ -58,19 +58,36 @@ See [Token Analytics Guide](./docs/token-analytics.md) for details.
 - **Typography Normalization** (opt-in) - Converts smart quotes and em dashes to plain ASCII
 - **Remove Articles** (opt-in) - Removes "a", "an", "the" to reduce token count
 - **Zone-Aware Protection** - Preserves formatting inside code blocks, inline code, and markdown tables
+- **Plugin System** (opt-in) - Add custom text-cleaning rules via `plugins: []` without forking the package
 
 ## Options
 
-| Option                | Type    | Default | Description                                                                               |
-| --------------------- | ------- | ------- | ----------------------------------------------------------------------------------------- |
-| `sanitizeUnicode`     | boolean | `true`  | Removes invisible characters (zero-width spaces, BOM, etc.) and applies NFC normalization |
-| `normalizeTypography` | boolean | `false` | Converts smart quotes, em dashes, and ellipsis to plain ASCII equivalents (opt-in)        |
-| `trimExtraSpaces`     | boolean | `true`  | Collapses multiple consecutive spaces into one and removes trailing whitespace per line   |
-| `preserveCodeBlocks`  | boolean | `true`  | Protects fenced code blocks, inline code, and markdown tables from all transforms         |
-| `removeArticles`      | boolean | `false` | Removes English articles ("a", "an", "the") from prose to reduce token count              |
-| `stripDecorative`     | boolean | `true`  | Removes decorative separator lines and collapses excessive blank lines                    |
+| Option                | Type               | Default | Description                                                                               |
+| --------------------- | ------------------ | ------- | ----------------------------------------------------------------------------------------- |
+| `sanitizeUnicode`     | boolean            | `true`  | Removes invisible characters (zero-width spaces, BOM, etc.) and applies NFC normalization |
+| `normalizeTypography` | boolean            | `false` | Converts smart quotes, em dashes, and ellipsis to plain ASCII equivalents (opt-in)        |
+| `trimExtraSpaces`     | boolean            | `true`  | Collapses multiple consecutive spaces into one and removes trailing whitespace per line   |
+| `preserveCodeBlocks`  | boolean            | `true`  | Protects fenced code blocks, inline code, and markdown tables from all transforms         |
+| `removeArticles`      | boolean            | `false` | Removes English articles ("a", "an", "the") from prose to reduce token count              |
+| `stripDecorative`     | boolean            | `true`  | Removes decorative separator lines and collapses excessive blank lines                    |
+| `plugins`             | `TokenZapPlugin[]` | `[]`    | Runs custom user-defined text transforms after all built-in transforms                    |
 
 See [docs/options.md](docs/options.md) for complete reference.
+
+## Writing a Plugin
+
+A plugin is a pure function: `(text: string) => string`. Plugins run last in the pipeline, after every built-in transform, and are not zone-aware (they see restored code blocks and tables as plain text).
+
+```ts
+import { tokenZap, TokenZapPlugin } from "@thee-nix/token-zap";
+
+const redactEmails: TokenZapPlugin = (text) =>
+  text.replace(/[\w.-]+@[\w.-]+\.\w+/g, "[email]");
+
+const cleaned = tokenZap(text, { plugins: [redactEmails] });
+```
+
+Multiple plugins run in array order, each receiving the previous plugin's output. See [docs/plugins.md](docs/plugins.md) for the full guide, including how to write plugins that avoid modifying code blocks.
 
 ## Documentation
 
@@ -78,6 +95,7 @@ See [docs/options.md](docs/options.md) for complete reference.
 - [Usage Examples](docs/examples.md)
 - [Unicode Sanitization](docs/unicode-sanitization.md)
 - [Decorative Formatting Removal](docs/strip-decorative.md)
+- [Plugin System](docs/plugins.md)
 
 ## TypeScript Support
 
@@ -93,6 +111,7 @@ const options: TokenZapOptions = {
   sanitizeUnicode: true,
   normalizeTypography: false,
   stripDecorative: true,
+  plugins: [],
 };
 
 const result = tokenZap("Hello   world", options);
