@@ -1,3 +1,5 @@
+export type TokenZapPlugin = (text: string) => string;
+
 export interface TokenZapOptions {
   removeArticles?: boolean;
   trimExtraSpaces?: boolean;
@@ -7,6 +9,7 @@ export interface TokenZapOptions {
   normalizeTypography?: boolean;
   report?: boolean;
   tokenizer?: (text: string) => number;
+  plugins?: TokenZapPlugin[];
 }
 
 export interface TokenZapStats {
