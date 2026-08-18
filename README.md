@@ -12,18 +12,17 @@ TokenZap is a lightweight, deterministic text optimizer for LLM prompts. It remo
 npm install @thee-nix/token-zap
 ```
 
-**New in v1.4.0:** Get real token savings with `report: true`:
+**New in v1.5.0:** Add custom text-cleaning rules with the plugin system:
 
 ```typescript
-const result = tokenZap(text, {
-  report: true,
-  tokenizer: (text) => Math.ceil(text.length / 4),
-});
+const redactEmails = (text) => text.replace(/[\w.-]+@[\w.-]+\.\w+/g, "[email]");
 
-console.log(result.stats.tokensSaved); // See actual token count reduction
+const result = tokenZap(text, {
+  plugins: [redactEmails],
+});
 ```
 
-See [Token Analytics Guide](./docs/token-analytics.md) for details.
+See [Plugin System Guide](./docs/plugins.md) for details.
 
 ## Quick Start
 
@@ -37,18 +36,17 @@ console.log(cleaned);
 // Output: "This has extra spaces and invisible chars."
 ```
 
-**New in v1.4.0:** Get real token savings with `report: true`:
+**New in v1.5.0:** Add custom text-cleaning rules with the plugin system:
 
 ```typescript
-const result = tokenZap(text, {
-  report: true,
-  tokenizer: (text) => Math.ceil(text.length / 4),
-});
+const redactEmails = (text) => text.replace(/[\w.-]+@[\w.-]+\.\w+/g, "[email]");
 
-console.log(result.stats.tokensSaved); // See actual token count reduction
+const result = tokenZap(text, {
+  plugins: [redactEmails],
+});
 ```
 
-See [Token Analytics Guide](./docs/token-analytics.md) for details.
+See [Plugin System Guide](./docs/plugins.md) for details.
 
 ## Features
 
@@ -117,18 +115,17 @@ const options: TokenZapOptions = {
 const result = tokenZap("Hello   world", options);
 ```
 
-**New in v1.4.0:** Get real token savings with `report: true`:
+**New in v1.5.0:** Add custom text-cleaning rules with the plugin system:
 
 ```typescript
-const result = tokenZap(text, {
-  report: true,
-  tokenizer: (text) => Math.ceil(text.length / 4),
-});
+const redactEmails = (text) => text.replace(/[\w.-]+@[\w.-]+\.\w+/g, "[email]");
 
-console.log(result.stats.tokensSaved); // See actual token count reduction
+const result = tokenZap(text, {
+  plugins: [redactEmails],
+});
 ```
 
-See [Token Analytics Guide](./docs/token-analytics.md) for details.
+See [Plugin System Guide](./docs/plugins.md) for details.
 
 ## Contributing
 
@@ -138,18 +135,17 @@ npm run build # Compile TypeScript
 npm test      # Run all tests
 ```
 
-**New in v1.4.0:** Get real token savings with `report: true`:
+**New in v1.5.0:** Add custom text-cleaning rules with the plugin system:
 
 ```typescript
-const result = tokenZap(text, {
-  report: true,
-  tokenizer: (text) => Math.ceil(text.length / 4),
-});
+const redactEmails = (text) => text.replace(/[\w.-]+@[\w.-]+\.\w+/g, "[email]");
 
-console.log(result.stats.tokensSaved); // See actual token count reduction
+const result = tokenZap(text, {
+  plugins: [redactEmails],
+});
 ```
 
-See [Token Analytics Guide](./docs/token-analytics.md) for details.
+See [Plugin System Guide](./docs/plugins.md) for details.
 
 ## Repository
 
