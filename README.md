@@ -12,18 +12,6 @@ TokenZap is a lightweight, deterministic text optimizer for LLM prompts. It remo
 npm install @thee-nix/token-zap
 ```
 
-**New in v1.5.0:** Add custom text-cleaning rules with the plugin system:
-
-```typescript
-const redactEmails = (text) => text.replace(/[\w.-]+@[\w.-]+\.\w+/g, "[email]");
-
-const result = tokenZap(text, {
-  plugins: [redactEmails],
-});
-```
-
-See [Plugin System Guide](./docs/plugins.md) for details.
-
 ## Quick Start
 
 ```ts
