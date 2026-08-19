@@ -103,18 +103,6 @@ const options: TokenZapOptions = {
 const result = tokenZap("Hello   world", options);
 ```
 
-**New in v1.5.0:** Add custom text-cleaning rules with the plugin system:
-
-```typescript
-const redactEmails = (text) => text.replace(/[\w.-]+@[\w.-]+\.\w+/g, "[email]");
-
-const result = tokenZap(text, {
-  plugins: [redactEmails],
-});
-```
-
-See [Plugin System Guide](./docs/plugins.md) for details.
-
 ## Contributing
 
 ```bash
@@ -122,18 +110,6 @@ npm install   # Install dependencies
 npm run build # Compile TypeScript
 npm test      # Run all tests
 ```
-
-**New in v1.5.0:** Add custom text-cleaning rules with the plugin system:
-
-```typescript
-const redactEmails = (text) => text.replace(/[\w.-]+@[\w.-]+\.\w+/g, "[email]");
-
-const result = tokenZap(text, {
-  plugins: [redactEmails],
-});
-```
-
-See [Plugin System Guide](./docs/plugins.md) for details.
 
 ## Repository
 
