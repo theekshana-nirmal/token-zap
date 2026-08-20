@@ -14,6 +14,9 @@ export type {
   TokenZapPlugin,
 } from "./types.js";
 
+export { zap } from "./zap.js";
+export type { ZapOptions } from "./zap.js";
+
 export function tokenZap(
   text: string,
   options?: TokenZapOptions & { report?: false },

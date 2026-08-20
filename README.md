@@ -24,17 +24,16 @@ console.log(cleaned);
 // Output: "This has extra spaces and invisible chars."
 ```
 
-**New in v1.5.0:** Add custom text-cleaning rules with the plugin system:
+**New in v1.6.0:** Use the `zap` tagged template literal to optimize interpolated values inline, without wrapping every variable in `tokenZap()`:
 
 ```typescript
-const redactEmails = (text) => text.replace(/[\w.-]+@[\w.-]+\.\w+/g, "[email]");
+import { zap } from "@thee-nix/token-zap";
 
-const result = tokenZap(text, {
-  plugins: [redactEmails],
-});
+const rawData = "some   messy    data";
+const prompt = zap`Analyze this: ${rawData}`;
 ```
 
-See [Plugin System Guide](./docs/plugins.md) for details.
+See [Zap Tagged Template](./docs/zap-template.md) for details, including the `zap.with(options)` configured variant.
 
 ## Features
 
@@ -45,6 +44,7 @@ See [Plugin System Guide](./docs/plugins.md) for details.
 - **Remove Articles** (opt-in) - Removes "a", "an", "the" to reduce token count
 - **Zone-Aware Protection** - Preserves formatting inside code blocks, inline code, and markdown tables
 - **Plugin System** (opt-in) - Add custom text-cleaning rules via `plugins: []` without forking the package
+- **Zap Tagged Template** (convenience) - Optimize interpolated values inline with `` zap`text ${value}` `` without wrapping each variable in `tokenZap()`
 
 ## Options
 
@@ -82,6 +82,7 @@ Multiple plugins run in array order, each receiving the previous plugin's output
 - [Unicode Sanitization](docs/unicode-sanitization.md)
 - [Decorative Formatting Removal](docs/strip-decorative.md)
 - [Plugin System](docs/plugins.md)
+- [Zap Tagged Template](docs/zap-template.md)
 
 ## TypeScript Support
 
