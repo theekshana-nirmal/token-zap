@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.6.0] - 2026-08-20
+
+### Added
+
+- **Zap Tagged Template Literal (#43)** - Inline prompt construction without manually wrapping every interpolated value
+  - New exported `zap` tagged template function: `` zap`Analyze this: ${value}` `` optimizes only interpolated values, leaving static template text untouched
+  - `zap.with(options)` returns a configured tagged template function for non-default options
+  - Non-string interpolated values are stringified before cleaning: `null`/`undefined` become empty strings, primitives use `String(value)`, objects/arrays use `JSON.stringify(value)` with a `String(value)` fallback for non-serializable values
+  - New exported type: `ZapOptions`
+  - Documentation in `docs/zap-template.md`
+
 ## [1.5.0] - 2026-08-18
 
 ### Added
@@ -126,3 +137,4 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 - Initial release
 - `trimExtraSpaces` option
 - `removeArticles` option
+
