@@ -7,6 +7,7 @@ export interface TokenZapOptions {
   stripDecorative?: boolean;
   sanitizeUnicode?: boolean;
   normalizeTypography?: boolean;
+  stripBinaryBlobs?: boolean;
   report?: boolean;
   tokenizer?: (text: string) => number;
   plugins?: TokenZapPlugin[];
@@ -22,4 +23,10 @@ export interface TokenZapStats {
 export interface TokenZapResult {
   output: string;
   stats: TokenZapStats;
+  /**
+   * Non-fatal advisories about the input, in document order. Currently
+   * populated with one entry per detected base64/binary data blob.
+   * Empty when nothing suspicious was found.
+   */
+  warnings: string[];
 }
