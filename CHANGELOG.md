@@ -4,6 +4,15 @@
 
 ### Added
 
+- **Command-Line Interface (#16)** - Batch file processing and diagnostics without writing custom scripts
+  - New `token-zap` binary (`npx @thee-nix/token-zap <file>`) prints cleaned output to stdout; warnings and stats go to stderr so stdout stays pipeable
+  - Multiple files and `*`/`?` wildcard patterns in one invocation (recursive `**` not supported)
+  - `--stats` prints per-file and total token savings (approximate, ~4 chars/token — the package stays zero-dependency)
+  - `--config <path>` loads cleaning options from a JSON file for consistent project-wide settings
+  - Exit codes for CI pipelines: 0 success, 1 file error, 2 usage/config error
+  - Binary blob warnings are surfaced on stderr by default
+  - Thin wrapper around the `tokenZap()` core API; no transformation logic duplicated, no new dependencies
+  - Documentation in `docs/cli.md`
 - **Binary Blob Detection (#10)** - Detect accidentally pasted base64/binary data blobs in prompt text
   - With `report: true`, `TokenZapResult` now includes a `warnings: string[]` array listing each detected blob (character count and position) without modifying the text — detect-and-warn by default
   - New opt-in `stripBinaryBlobs` option replaces detected blobs with a `[binary data removed, n characters]` placeholder

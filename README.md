@@ -46,6 +46,7 @@ See [Zap Tagged Template](./docs/zap-template.md) for details, including the `za
 - **Zone-Aware Protection** - Preserves formatting inside code blocks, inline code, and markdown tables
 - **Plugin System** (opt-in) - Add custom text-cleaning rules via `plugins: []` without forking the package
 - **Zap Tagged Template** (convenience) - Optimize interpolated values inline with `` zap`text ${value}` `` without wrapping each variable in `tokenZap()`
+- **CLI** - Clean prompt files from the command line with `npx @thee-nix/token-zap`, including globs, `--stats`, and `--config` for CI pipelines
 
 ## Options
 
@@ -86,6 +87,7 @@ Multiple plugins run in array order, each receiving the previous plugin's output
 - [Binary Blob Detection](docs/binary-blob-detection.md)
 - [Plugin System](docs/plugins.md)
 - [Zap Tagged Template](docs/zap-template.md)
+- [CLI Guide](docs/cli.md)
 
 ## TypeScript Support
 
