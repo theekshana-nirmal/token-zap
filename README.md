@@ -42,6 +42,7 @@ See [Zap Tagged Template](./docs/zap-template.md) for details, including the `za
 - **Strip Decorative Lines** (default on) - Removes `---`, `===`, `***` separator lines
 - **Typography Normalization** (opt-in) - Converts smart quotes and em dashes to plain ASCII
 - **Remove Articles** (opt-in) - Removes "a", "an", "the" to reduce token count
+- **Binary Blob Detection** - Warns about accidentally pasted base64/binary data; opt-in `stripBinaryBlobs` replaces blobs with a placeholder
 - **Zone-Aware Protection** - Preserves formatting inside code blocks, inline code, and markdown tables
 - **Plugin System** (opt-in) - Add custom text-cleaning rules via `plugins: []` without forking the package
 - **Zap Tagged Template** (convenience) - Optimize interpolated values inline with `` zap`text ${value}` `` without wrapping each variable in `tokenZap()`
@@ -56,6 +57,7 @@ See [Zap Tagged Template](./docs/zap-template.md) for details, including the `za
 | `preserveCodeBlocks`  | boolean            | `true`  | Protects fenced code blocks, inline code, and markdown tables from all transforms         |
 | `removeArticles`      | boolean            | `false` | Removes English articles ("a", "an", "the") from prose to reduce token count              |
 | `stripDecorative`     | boolean            | `true`  | Removes decorative separator lines and collapses excessive blank lines                    |
+| `stripBinaryBlobs`    | boolean            | `false` | Replaces detected base64/binary data blobs with a placeholder (warn-only by default)       |
 | `plugins`             | `TokenZapPlugin[]` | `[]`    | Runs custom user-defined text transforms after all built-in transforms                    |
 
 See [docs/options.md](docs/options.md) for complete reference.
@@ -81,6 +83,7 @@ Multiple plugins run in array order, each receiving the previous plugin's output
 - [Usage Examples](docs/examples.md)
 - [Unicode Sanitization](docs/unicode-sanitization.md)
 - [Decorative Formatting Removal](docs/strip-decorative.md)
+- [Binary Blob Detection](docs/binary-blob-detection.md)
 - [Plugin System](docs/plugins.md)
 - [Zap Tagged Template](docs/zap-template.md)
 

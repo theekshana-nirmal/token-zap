@@ -3,6 +3,10 @@ import { stripDecorative as stripDeco } from "./utils/stripDecorative.js";
 import { trimExtraSpaces as trimSpaces } from "./utils/trimExtraSpaces.js";
 import { sanitizeUnicode as sanitize } from "./utils/sanitizeUnicode.js";
 import { normalizeTypography as normalizeTypo } from "./utils/normalizeTypography.js";
+import {
+  stripBinaryBlobs as stripBlobs,
+  detectBinaryBlobWarnings,
+} from "./utils/stripBinaryBlobs.js";
 import { runPlugins } from "./utils/runPlugins.js";
 import { countTokens } from "./utils/tokenCount.js";
 import type { TokenZapOptions, TokenZapResult } from "./types.js";
@@ -36,14 +40,19 @@ export function tokenZap(
     stripDecorative = true,
     sanitizeUnicode = true,
     normalizeTypography = false,
+    stripBinaryBlobs = false,
     report = false,
     tokenizer,
     plugins = [],
   } = options;
 
   let originalTokens = 0;
+  let warnings: string[] = [];
   if (report) {
     originalTokens = countTokens(text, tokenizer);
+    // Detection runs on the raw input so advisories describe what was passed
+    // in, even when stripping later replaces the blobs.
+    warnings = detectBinaryBlobWarnings(text, preserveCodeBlocks);
   }
 
   if (sanitizeUnicode) {
@@ -56,6 +65,10 @@ export function tokenZap(
 
   if (removeArticles) {
     text = rmArticles(text, preserveCodeBlocks);
+  }
+
+  if (stripBinaryBlobs) {
+    text = stripBlobs(text, preserveCodeBlocks);
   }
 
   if (stripDecorative) {
@@ -86,6 +99,7 @@ export function tokenZap(
         tokensSaved,
         percentSaved,
       },
+      warnings,
     };
   }
 

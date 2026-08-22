@@ -14,6 +14,7 @@ const options: TokenZapOptions = {
   preserveCodeBlocks: true, // Protect code/tables (default: on)
   removeArticles: false, // Remove "a", "an", "the" (default: off)
   stripDecorative: true, // Remove separator lines (default: on)
+  stripBinaryBlobs: false, // Replace base64/binary blobs with a placeholder (default: off)
   plugins: [], // Custom user-defined text transforms (default: none)
 };
 
@@ -159,6 +160,29 @@ See [strip-decorative.md](strip-decorative.md) for complete reference.
 
 ---
 
+### `stripBinaryBlobs` (default: `false`)
+
+Detects base64-like or binary-looking data blobs and replaces each one with a short placeholder: `[binary data removed, n characters]`.
+
+**Safe to enable by default:** No. Some prompts intentionally include encoded data, so detection is warn-only by default; stripping is an explicit choice.
+
+**Zone-aware:** Blobs inside code blocks, inline code, and markdown tables are treated as intentional and preserved (unless `preserveCodeBlocks` is `false`).
+
+**Detection without stripping:** With `report: true`, detected blobs are listed in `result.warnings` without modifying the text.
+
+**Example:**
+
+```ts
+tokenZap("Image: data:image/png;base64,iVBORw0KGgo...", {
+  stripBinaryBlobs: true,
+});
+// Output: "Image: [binary data removed, 2318 characters]"
+```
+
+See [binary-blob-detection.md](binary-blob-detection.md) for the detection heuristic, thresholds, and known limitations.
+
+---
+
 ### `plugins` (default: `[]`)
 
 Runs an ordered list of custom, user-defined text transforms after all built-in transforms have completed.
@@ -194,9 +218,10 @@ Transforms run in this order:
 1. `sanitizeUnicode` - Removes invisible characters first
 2. `normalizeTypography` - Converts smart quotes/dashes
 3. `removeArticles` - Content-level word removal
-4. `stripDecorative` - Removes separator lines and blank lines
-5. `trimExtraSpaces` - Final cleanup of leftover gaps
-6. `plugins` - Custom user-defined transforms, run last
+4. `stripBinaryBlobs` - Replaces base64/binary blobs with placeholders
+5. `stripDecorative` - Removes separator lines and blank lines
+6. `trimExtraSpaces` - Final cleanup of leftover gaps
+7. `plugins` - Custom user-defined transforms, run last
 
 ### `preserveCodeBlocks: false`
 
@@ -233,7 +258,9 @@ tokenZap(text, {
 
 Returns token analytics instead of just the cleaned string.
 
-When `true`, returns `{ output: string, stats: TokenZapStats }` instead of plain `string`.
+When `true`, returns `{ output: string, stats: TokenZapStats, warnings: string[] }` instead of plain `string`.
+
+The `warnings` array (added in v1.7.0) lists detected base64/binary data blobs in the input, one entry per blob, without modifying the text. See [Binary Blob Detection](./binary-blob-detection.md).
 
 Requires either:
 

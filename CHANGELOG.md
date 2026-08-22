@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.7.0]
+
+### Added
+
+- **Binary Blob Detection (#10)** - Detect accidentally pasted base64/binary data blobs in prompt text
+  - With `report: true`, `TokenZapResult` now includes a `warnings: string[]` array listing each detected blob (character count and position) without modifying the text — detect-and-warn by default
+  - New opt-in `stripBinaryBlobs` option replaces detected blobs with a `[binary data removed, n characters]` placeholder
+  - Heuristic: bare base64-alphabet runs of 100+ characters with mixed case and digits, plus explicit `data:<mime>;base64,` URIs with 50+ character payloads — UUIDs, SHA-256, and long single-case hex strings are not flagged
+  - Zone-aware: blobs inside code blocks, inline code, and tables are treated as intentional and skipped when `preserveCodeBlocks` is `true`
+  - Documentation in `docs/binary-blob-detection.md`
+
 ## [1.6.0] - 2026-08-20
 
 ### Added
