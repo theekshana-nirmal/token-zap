@@ -3,6 +3,9 @@
   "version": "1.6.0",
   "description": "Shrink your LLM prompts instantly. TokenZap removes wasteful spacing and unnecessary characters to keep your API payloads lean and token-efficient.",
   "main": "dist/index.js",
+  "bin": {
+    "token-zap": "dist/cli.js"
+  },
   "files": [
     "dist",
     "README.md",
