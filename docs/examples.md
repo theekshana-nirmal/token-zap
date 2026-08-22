@@ -205,6 +205,33 @@ console.log(result);
 
 ---
 
+## zapJson
+
+### Clean Structured Data Before Serialization
+
+```ts
+import { zapJson } from "@thee-nix/token-zap";
+
+const apiResponse = {
+  id: 123,
+  name: "report",
+  description: null,
+  pages: [{ number: 1, body: "text", footnote: null, links: [] }],
+  cache: {},
+};
+
+console.log(JSON.stringify(zapJson(apiResponse)));
+// Output: {"id":123,"name":"report","pages":[{"number":1,"body":"text"}]}
+```
+
+### Combine With Text Cleaning
+
+```ts
+import { tokenZap, zapJson } from "@thee-nix/token-zap";
+
+const prompt = tokenZap(JSON.stringify(zapJson(apiResponse)));
+```
+
 ## TypeScript Usage
 
 ```ts

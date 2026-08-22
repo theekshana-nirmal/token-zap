@@ -4,6 +4,13 @@
 
 ### Added
 
+- **zapJson Utility (#6)** - Remove null and empty values from structured data before prompt injection
+  - New standalone `zapJson(data: unknown): unknown` export (not a text transform — it runs before serialization)
+  - Recursively removes `null`, `undefined`, empty strings, empty arrays, and empty plain objects; `0`, `false`, and `NaN` are kept
+  - Pure recursion with no dependencies: containers are rebuilt without mutating the input, non-plain objects (Date, Map, class instances) pass through untouched
+  - Circular references are detected and the cyclic branch is dropped instead of throwing; shared non-circular references are kept
+  - Documented as opt-in and unsafe when a downstream system relies on null-versus-absent distinctions
+  - Documentation in `docs/zap-json.md`
 - **Command-Line Interface (#16)** - Batch file processing and diagnostics without writing custom scripts
   - New `token-zap` binary (`npx @thee-nix/token-zap <file>`) prints cleaned output to stdout; warnings and stats go to stderr so stdout stays pipeable
   - Multiple files and `*`/`?` wildcard patterns in one invocation (recursive `**` not supported)

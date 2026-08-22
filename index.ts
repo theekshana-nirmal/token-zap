@@ -20,6 +20,7 @@ export type {
 
 export { zap } from "./zap.js";
 export type { ZapOptions } from "./zap.js";
+export { zapJson } from "./zapJson.js";
 
 export function tokenZap(
   text: string,
